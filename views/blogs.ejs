@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("./partials/head.ejs") %> 
+<body>
+    
+    <%- include("./partials/nav.ejs") %> 
+
+    <div  class="blogContainer">
+
+        <div>
+            <h3><%= blog.title %></h3>
+            <p><%= blog.body %></p>
+        </div>
+
+
+
+        <a id="del" data-id = <%= blog._id %> >
+            <img src="/icons/iconmonstr-trash-can-1.svg" alt="delete">
+        </a>
+
+
+        <a id="edit" href = "/blogs/edit/<%= blog._id %>">
+            <img src="/icons/iconmonstr-pencil-4.svg" alt="edit">
+        </a>
+
+    </div>
+
+    <script>
+        const del = document.getElementById("del");
+        const blogId = del.dataset.id; 
+
+        del.addEventListener("click", () => {
+
+            fetch(`/delete/${blogId}`, {method: "DELETE"})
+            .then((data) => data.json())
+            .then((data) => window.location.href = `${data.url}`);
+
+        })
+    </script>
+   
+</body>
+</html>
